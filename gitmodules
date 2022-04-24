@@ -1,0 +1,7 @@
+[submodule "api"]
+	path = api
+	url = git@github.com:ahimi-box/tutor_management_app_api.git
+
+[submodule "front"]
+	path = front
+	url = git@github.com:ahimi-box/tutor_management_app_front.git
