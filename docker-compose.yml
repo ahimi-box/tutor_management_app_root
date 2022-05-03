@@ -7,8 +7,24 @@ services:
       TZ: UTC
       PGTZ: UTC
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    ports:
+      - 5432:5432
     volumes:
       - ./api/tmp/db:/var/lib/postgresql/data
+  # pgadmin4:
+  #   image: dpage/pgadmin4:5.0
+  #   container_name: pgadmin4
+  #   ports:
+  #       - 8000:80
+  #   volumes:
+  #       - pgadmin4_volume:/var/lib/pgadmin
+  #   environment:
+  #       PGADMIN_DEFAULT_EMAIL: $PGADMIN4_EMAIL
+  #       PGADMIN_DEFAULT_PASSWORD: $PGADMIN4_PASSWORD
+  #   hostname: pgadmin4
+  #   depends_on:
+  #     - postgres
+  #   restart: always
 
   api:
     build:
@@ -39,3 +55,14 @@ services:
       - "$FRONT_PORT:$CONTAINER_PORT"
     depends_on:
       - api
+
+volumes:
+  # postgres_volume:
+  #   external: true
+  pgadmin4_volume:
+    external: true
+# http://localhost:8000/でpgadmin4が立ち上がる
+# 下記コマンドを打つ
+
+# pgAdmin4用
+# $ docker volume create pgadmin4_volume

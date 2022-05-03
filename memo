@@ -1,0 +1,91 @@
+? Project name: tutor_management_app
+? Programming language: JavaScript
+? Package manager: Yarn
+? UI framework: Vuetify.js
+? Nuxt.js modules: Axios - Promise based HTTP client
+? Linting tools: ESLint
+? Testing framework: None
+? Rendering mode: Single Page App
+? Deployment target: Server (Node.js hosting)
+? Development tools: jsconfig.json (Recommended for VS Code if you're not us
+ing typescript)
+? Continuous integration: None
+? Version control system: Git
+
+git remote add origin git@github.com:ahimi-box/tutor_management_app_root.git
+git remote add origin git@github.com:ahimi-box/tutor_management_app_api.git
+git remote add origin git@github.com:ahimi-box/tutor_management_app_front.git
+
+git add .
+git commit -m "first commit"
+git push -u origin master
+
+$ git checkout -b master
+$ git checkout -b modify-README
+$ git add -A
+$ git commit -m "READMEを修正"
+$ git checkout master
+$ git merge modify-README
+$ git push
+
+作業ブランチ名
+済devise-root
+済devise-api
+済devise-front
+
+
+
+ディレクトリとファイルの権限を変更します。誰でも読み込み、書き込みができるように権限を書き換えます。
+sudo chmod -R 777 /mnt/c/linux_home/docker-project/tutor_management_app_root1
+sudo chmod -R 600 /mnt/c/linux_home/.ssh/id_rsa
+
+$sudo docker-compose run front yarn install
+$sudo docker-compose build
+$docker-compose run api rails db:create
+$docker-compose run api rails db:migrate
+$docker-compose run api rails db:migrate:reset db:seed
+$docker-compose run api rails db:seed
+$docker-compose up
+
+devise追加
+$ docker-compose build 
+$ docker-compose run api rails g devise:install
+$ docker-compose run api rails g devise_token_auth:install User auth
+$ docker-compose run api rails g devise_token_auth:install Student auth
+$ docker-compose run api rails g devise_token_auth:install Teacher teacher_auth
+$ docker-compose run api rails g devise:i18n:locale ja
+
+docker-compose run api rails db:migrate
+authモジュールの追加
+docker-compose run front yarn add @nuxtjs/auth
+
+nuxt.config.jsがコツ
+  // 追加
+  auth: {
+    strategies: {
+      student: {
+        _scheme: 'local',
+        endpoints: {
+          login: { url: '/api/v1/auth/sign_in', method: 'post', propertyName: 'token' },
+          // logout: { url: '/api/v1/auth/sign_out', method: 'post' },
+          // user: { url: '/api/v1/auth/user', method: 'get', propertyName: 'user' }
+          user: false
+        },
+      },
+      teacher: {
+        _scheme: 'local',
+        endpoints: {
+          login: { url: '/api/v1/teacher_auth/sign_in', method: 'post', propertyName: 'token' },
+          // logout: { url: '/api/v1/teacher_auth/sign_out', method: 'post' },
+          // user: { url: '/api/v1/teacher_auth/user', method: 'get', propertyName: 'user' }
+          user: false
+        }
+      }
+    }
+  }
+
+上記でstudentとteacherとadminでログインできる。
+
+
+
+
